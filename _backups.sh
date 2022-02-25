@@ -29,8 +29,8 @@ JINCHUDIR=/Volumes/Jinchuriki/_backups
 ATLAS="$JINCHUDIR"/Atlas_$TODAY.zip
 ITACHI="$JINCHUDIR"/Itachi_$TODAY.zip
 
-OLDATLAS=$(ls "$ONEDIR"/Atlas*)
-OLDITACHI=$(ls "$ONEDIR"/Itachi*)
+OLDATLAS="$ONEDIR"/Atlas*
+OLDITACHI="$ONEDIR"/Itachi*
 
 
 # ------------------------------------------------------------------------------
