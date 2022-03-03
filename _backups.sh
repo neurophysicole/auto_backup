@@ -17,7 +17,7 @@ TODAY=$(date '+%Y-%m-%d')
 
 # -------------
 # init dir vars
-ONEDIR=~/OneDrive\ -\ University\ of\ Nebraska-Lincoln/_backups
+ONEDIR="OneDrive\ -\ University\ of\ Nebraska-Lincoln/_backups"
 
 ATLASDIR=/Volumes/Atlas
 ITACHIDIR=/Volumes/Itachi
@@ -29,21 +29,26 @@ JINCHUDIR=/Volumes/Jinchuriki/_backups
 ATLAS="$JINCHUDIR"/Atlas_$TODAY.zip
 ITACHI="$JINCHUDIR"/Itachi_$TODAY.zip
 
-OLDATLAS="$ONEDIR"/Atlas*
-OLDITACHI="$ONEDIR"/Itachi*
+OLDATLAS="$HOME/$ONEDIR"/Atlas*
+OLDITACHI="$HOME/$ONEDIR"/Itachi*
 
 
 # ------------------------------------------------------------------------------
 # test for connection to onedrive and compress the most reecent TIME LORD backup
-test -d "$ONEDIR" && zip -r -p -y $ATLAS "$ATLASDIR" 
-test -d "$ONEDIR" && zip -r -p -y $ITACHI "$ITACHIDIR"
+eval test -d "$HOME/$ONEDIR" && zip -r -p -y $ATLAS "$ATLASDIR" 
+eval test -d "$HOME/$ONEDIR" && zip -r -p -y $ITACHI "$ITACHIDIR"
 
 
 # ------------
 # run the test
-DIFFATLAS=$(diff -q --from-file $OLDATLAS "$JINCHUDIR"/Atlas_$TODAY.zip)
-DIFFITACHI=$(diff -q --from-file $OLDITACHI "$JINCHUDIR"/Itachi_$TODAY.zip)
+DIFFATLAS=$(eval diff -q --from-file $OLDATLAS "$JINCHUDIR"/Atlas_$TODAY.zip)
+DIFFITACHI=$(eval diff -q --from-file $OLDITACHI "$JINCHUDIR"/Itachi_$TODAY.zip)
 
-if [[ $DIFFATLAS ]]; then if test -f "$OLDATLAS"; then rm -rf "$OLDATLAS" && rsync -a "$ATLAS" "$ONEDIR" && rm -rf "$ATLAS"; else rsync -a "$ATLAS" "$ONEDIR" && rm -rf "$ATLAS"; fi; else rm -rf "$ATLAS"; fi
+if [[ $DIFFATLAS ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDATLAS && eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf $ATLAS; else eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf "$ATLAS"; fi; else eval rm -rf "$ATLAS"; fi
 
-if [[ $DIFFITACHI ]]; then if test -f "$OLDATLAS"; then rm -rf "$OLDITACHI" && rsync -a "$ITACHI" "$ONEDIR" && rm -rf "$ITACHI"; else rsync -a "$ITACHI" "$ONEDIR" && rm -rf "$ITACHI"; fi; else rm -rf "$ITACHI"; fi
+if [[ $DIFFITACHI ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDITACHI && eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; else eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf "$ITACHI"; fi; else eval rm -rf "$ITACHI"; fi
+
+
+# -----------------
+# exit tmux session
+exit
