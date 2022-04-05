@@ -35,20 +35,15 @@ OLDITACHI="$HOME/$ONEDIR"/Itachi*
 
 # ------------------------------------------------------------------------------
 # test for connection to onedrive and compress the most reecent TIME LORD backup
-eval test -d "$HOME/$ONEDIR" && zip -r -p -y $ATLAS "$ATLASDIR" 
-eval test -d "$HOME/$ONEDIR" && zip -r -p -y $ITACHI "$ITACHIDIR"
+eval test -d "$HOME/$ONEDIR" && zip -r -p -y $ATLAS $ATLASDIR
+eval test -d "$HOME/$ONEDIR" && zip -r -p -y $ITACHI $ITACHIDIR
 
 
 # ------------
 # run the test
-DIFFATLAS=$(eval diff -q --from-file $OLDATLAS "$JINCHUDIR"/Atlas_$TODAY.zip)
-DIFFITACHI=$(eval diff -q --from-file $OLDITACHI "$JINCHUDIR"/Itachi_$TODAY.zip)
+DIFFATLAS=$(eval diff -q --from-file $OLDATLAS $ATLAS)
+DIFFITACHI=$(eval diff -q --from-file $OLDITACHI $ITACHI)
 
-if [[ $DIFFATLAS ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDATLAS && eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf $ATLAS; else eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf "$ATLAS"; fi; else eval rm -rf "$ATLAS"; fi
+if [[ $DIFFATLAS ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDATLAS && eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf $ATLAS; else eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf $ATLAS; fi; else eval rm -rf $ATLAS; fi
 
-if [[ $DIFFITACHI ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDITACHI && eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; else eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf "$ITACHI"; fi; else eval rm -rf "$ITACHI"; fi
-
-
-# -----------------
-# exit tmux session
-exit
+if [[ $DIFFITACHI ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDITACHI && eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; else eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; fi; else eval rm -rf $ITACHI; fi
