@@ -46,4 +46,4 @@ DIFFITACHI=$(eval diff -q --from-file $OLDITACHI $ITACHI)
 
 if [[ $DIFFATLAS ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDATLAS && eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf $ATLAS; else eval rsync -a $ATLAS "$HOME/$ONEDIR" && eval rm -rf $ATLAS; fi; else eval rm -rf $ATLAS; fi
 
-if [[ $DIFFITACHI ]]; then if eval test -f $OLDATLAS; then eval rm -rf $OLDITACHI && eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; else eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; fi; else eval rm -rf $ITACHI; fi
+if [[ $DIFFITACHI ]]; then if eval test -f $OLDITACHI; then eval rm -rf $OLDITACHI && eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; else eval rsync -a $ITACHI "$HOME/$ONEDIR" && eval rm -rf $ITACHI; fi; else eval rm -rf $ITACHI; fi
